@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: ph-pocket-pair
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:application --workers 1 --threads 4 --bind 0.0.0.0:$PORT --timeout 30 --access-logfile /dev/null
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.10
+      - key: SPOTIFY_CLIENT_ID
+        sync: false
+      - key: DEVICE_ENROLLMENT_KEY
+        sync: false
